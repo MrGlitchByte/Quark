@@ -80,7 +80,7 @@ async fn main() {
 
     // Create the framework
     let framework = StandardFramework::new()
-        .configure(|c| c.owners(owners).prefix("~"))
+        .configure(|c| c.owners(owners).prefix("q/"))
         .group(&GENERAL_GROUP);
 
     let intents = GatewayIntents::GUILD_MESSAGES

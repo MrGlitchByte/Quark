@@ -110,13 +110,16 @@ jobs:
       - if: "!contains(github.event.head_commit.message, 'BC BREAK') && !contains(github.event.head_commit.message, 'Signed-off-by: dependabot-preview[bot] <support@dependabot.com>')"
         run: echo "$VERSION" >./version/version
         env:
+          DISCORD_ENV_TOKEN: ${{ secrets.DISCORD_ENV_TOKEN }}
           VERSION: ${{ steps.semvers.outputs.v_minor }}
       - if: "contains(github.event.head_commit.message, 'Signed-off-by: dependabot-preview[bot] <support@dependabot.com>')"
         run: echo "$VERSION" >./version/version
         env:
+          DISCORD_ENV_TOKEN: ${{ secrets.DISCORD_ENV_TOKEN }}
           VERSION: ${{ steps.semvers.outputs.v_patch }}
       - run: echo "$VERSION" > ./version/version
         env:
+          DISCORD_ENV_TOKEN: ${{ secrets.DISCORD_ENV_TOKEN }}
           VERSION: ${{ steps.semvers.outputs.v_major }}
         if: "contains(github.event.head_commit.message, 'BC BREAK')"
       - uses: actions/upload-artifact@master
@@ -178,6 +181,7 @@ jobs:
           args: "toml-cli"
       - shell: bash
         env:
+          DISCORD_ENV_TOKEN: ${{ secrets.DISCORD_ENV_TOKEN }}
           VERSION: "${{ steps.get_version.outputs.VERSION }}"
         run: |
           TEMP_FILE="$(mktemp)"
@@ -185,6 +189,7 @@ jobs:
           mv "$TEMP_FILE" Cargo.toml
       - uses: actions-rs/cargo@v1
         env:
+          DISCORD_ENV_TOKEN: ${{ secrets.DISCORD_ENV_TOKEN }}
           VERSION: "${{ steps.get_version.outputs.VERSION }}"
           REPOSITORY_NAME: "${{ steps.get_repository_name.outputs.REPOSITORY_NAME }}"
         with:
@@ -236,6 +241,7 @@ jobs:
           mv "$TEMP_FILE" Cargo.toml
         shell: bash
         env:
+          DISCORD_ENV_TOKEN: ${{ secrets.DISCORD_ENV_TOKEN }}
           VERSION: "${{ steps.get_version.outputs.VERSION }}"
       - uses: stefanzweifel/git-auto-commit-action@v4.1.3
         with:

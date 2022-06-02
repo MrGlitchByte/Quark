@@ -2,6 +2,10 @@ name: Main Workflow
 
 on: [push, pull_request]
 
+env:
+  CARGO_TERM_COLOR: always
+  DISCORD_ENV_TOKEN: ${{ secrets.DISCORD_ENV_TOKEN }}
+
 jobs:
   build:
     name: Build

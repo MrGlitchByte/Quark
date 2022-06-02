@@ -14,6 +14,7 @@ use std::collections::HashSet;
 use std::env;
 use std::sync::Arc;
 
+use colored::Colorize;
 use serenity::async_trait;
 use serenity::client::bridge::gateway::ShardManager;
 use serenity::framework::standard::macros::group;
@@ -63,7 +64,17 @@ async fn main() {
     // `RUST_LOG` to `debug`.
     tracing_subscriber::fmt::init();
 
-    let token = env::var("DISCORD_TOKEN").expect("Expected a token in the environment");
+    // get discord token
+    let token = match env::var("DISCORD_TOKEN") {
+        Ok(token) => token,
+        Err(_) => {
+            println!(
+                "{}",
+                "Please set the environment variable DISCORD_TOKEN to continue".red()
+            );
+            return;
+        }
+    };
 
     let http = Http::new(&token);
 

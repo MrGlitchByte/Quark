@@ -48,6 +48,7 @@ impl EventHandler for Handler {
     }
 }
 
+// this is a comment
 #[group]
 #[commands(multiply, ping, quit)]
 struct General;
